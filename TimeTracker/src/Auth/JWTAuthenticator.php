@@ -16,16 +16,16 @@ class JWTAuthenticator {
 	public function apiLogin($credentials){
 		$validation = $this->validateCredentials($credentials);
 		if($validation->fails()){
-			return response()->json(['error' => $validation->errors()->all()], 401);
+			return response()->json(['status' =>false, 'error' => $validation->errors()->all()], 200);
 		}
-		if(!$credentials) return response()->json(['error' => 'Invalid E-mail Address or Password.', 401]);
+		if(!$credentials) return response()->json(['status' =>false, 'error' => 'Invalid E-mail Address or Password.', 200]);
 		$token = false;
 
 		try {
 			$token = JWTAuth::attempt($credentials);
-		    if (!$token) return response()->json(['error' => 'Invalid E-mail Address or Password.'], 401);
+		    if (!$token) return response()->json(['status' =>false, 'error' => 'Invalid E-mail Address or Password.'], 200);
 		} catch (\JWTException $e) {
-		    return response()->json(['error' => 'Could not create token.'], 500);
+		    return response()->json(['status' =>false, 'error' => 'Could not create token.'], 500);
 		}
 		$user = Auth::user();
 		$userdata = [
