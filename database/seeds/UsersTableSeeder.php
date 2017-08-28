@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
         	[
         		'name' => 'Joshua Tundag',
         		'username' => 'admin',
-        		'email' => 'admin	',
+        		'email' => 'admin',
         		'password' => \Hash::make('admin'),
         		'created_at' => \Carbon\Carbon::now(),
         	]
