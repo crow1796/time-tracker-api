@@ -2,7 +2,7 @@
 namespace TimeTracker\Auth;
 use JWTAuth;
 use Validator;
-use App\User;
+use App\Models\V1\User;
 use Auth;
 use Hash;
 
