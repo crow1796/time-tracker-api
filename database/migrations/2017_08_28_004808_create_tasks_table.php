@@ -17,11 +17,23 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->integer('iteration_id')
                     ->unsigned();
+            $table->integer('project_id')
+                    ->unsigned();
             $table->string('title');
             $table->text('description')
                     ->nullable();
             $table->float('estimate')
                     ->default(1);
+
+            $table->foreign('iteration_id')
+                    ->references('id')
+                    ->on('iterations')
+                    ->onDelete('cascade');
+
+            $table->foreign('project_id')
+                    ->references('id')
+                    ->on('projects')
+                    ->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -2,7 +2,7 @@
 namespace TimeTracker\Auth;
 use JWTAuth;
 use Validator;
-use App\Models\V1\User;
+use App\User;
 use Auth;
 use Hash;
 
@@ -45,6 +45,29 @@ class JWTAuthenticator {
 		];
 
 		return Validator::make($credentials, $rules);
+	}
+
+	public function getUser(){
+		$tokenExpired = false;
+		try {
+			$user = JWTAuth::parseToken()->authenticate();
+		}catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+			$tokenExpired = true;
+		} catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+		} catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+		}
+		if($tokenExpired){
+			return response()->json(['error' => 'Invalid User.', 'token_expired' => true]);
+		}
+		if(!$user){
+			return response()->json(['error' => 'Invalid User.'], 401);
+		}
+
+		return [
+			'user' => $user,
+		];
 	}
 
 }

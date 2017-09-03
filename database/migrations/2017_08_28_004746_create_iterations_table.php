@@ -15,17 +15,10 @@ class CreateIterationsTable extends Migration
     {
         Schema::create('iterations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('project_id')
-                    ->unsigned();
-            $table->timestamp('started_at');
+            $table->timestamp('started_at')
+                    ->nullable();
             $table->timestamp('ended_at')
-                    ->default(\Carbon\Carbon::now());
-
-            $table->foreign('project_id')
-                    ->references('id')
-                    ->on('projects')
-                    ->onDelete('cascade');
-
+                    ->nullable();
             $table->timestamps();
         });
     }
