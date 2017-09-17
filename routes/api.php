@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function(){
 	Route::group(['prefix' => 'teams'], function(){
 		Route::get('/all', 'TeamsController@index');
 		Route::get('/{id}/projects', 'TeamsController@teamProjects');
+		Route::post('/{id}/projects/create', 'ProjectsController@create');
 		Route::post('/{teamId}/{projectId}/{iterationId}/tasks/store', 'TasksController@store');
 	});
 });
