@@ -19,11 +19,12 @@ class CreateTasksTable extends Migration
                     ->unsigned();
             $table->integer('project_id')
                     ->unsigned();
-            $table->string('title');
+            $table->string('title')
+                    ->nullable();
             $table->text('description')
                     ->nullable();
             $table->float('estimate')
-                    ->default(1);
+                    ->nullable();
 
             $table->foreign('iteration_id')
                     ->references('id')

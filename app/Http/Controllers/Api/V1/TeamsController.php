@@ -11,8 +11,15 @@ class TeamsController extends Controller
 {
 
     public function index(){
-		$teams = Team::all();
-		$iterations = Iteration::orderBy('started_at', 'desc')->limit(5)->get();
+    	dd(\Auth::user());
+		$teams = \DB::table('team_user')
+					->selectRaw('teams.id, teams.name, teams.slug')
+					->join('teams', 'team_user.team_id', '=', 'teams.id')
+					->join('users', 'team_user.user_id', '=', 'users.id')
+					->get();
+		$iterations = Iteration::orderBy('started_at', 'desc')
+								->limit(5)
+								->get();
 		return [
 			'teams' => $teams,
 			'iterations' => $iterations,

@@ -18,11 +18,6 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->string('slug');
 
-            $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onDelete('cascade');
-
             $table->timestamps();
         });
     }

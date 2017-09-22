@@ -44,4 +44,9 @@ class LoginController extends Controller
         return $this->jwtAuth
                     ->apiLogin($request->only('email', 'password'));
     }
+
+    public function getUser(){
+        $jwt = new JWTAuthenticator;
+        return $jwt->getUser();
+    }
 }

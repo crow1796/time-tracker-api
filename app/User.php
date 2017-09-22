@@ -30,4 +30,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
+    public function teams(){
+        return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id');
+    }
+
 }

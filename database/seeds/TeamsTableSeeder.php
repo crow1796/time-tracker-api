@@ -17,13 +17,11 @@ class TeamsTableSeeder extends Seeder
         	[
         		'name' => 'Syntactics Inc.',
         		'slug' => 'syntactics-inc',
-        		'user_id' => \App\User::where(['email' => 'admin'])->first()->id,
         		'created_at' => \Carbon\Carbon::now(),
         	],
         	[
         		'name' => 'BaytechPH',
         		'slug' => 'baytechph',
-        		'user_id' => \App\User::where(['email' => 'admin'])->first()->id,
         		'created_at' => \Carbon\Carbon::now(),
         	]
         ];

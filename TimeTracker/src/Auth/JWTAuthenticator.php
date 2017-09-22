@@ -49,6 +49,7 @@ class JWTAuthenticator {
 
 	public function getUser(){
 		$tokenExpired = false;
+		$user = null;
 		try {
 			$user = JWTAuth::parseToken()->authenticate();
 		}catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
