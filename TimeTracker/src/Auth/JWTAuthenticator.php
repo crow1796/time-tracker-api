@@ -65,7 +65,6 @@ class JWTAuthenticator {
 		if(!$user){
 			return response()->json(['error' => 'Invalid User.'], 401);
 		}
-
 		return [
 			'user' => $user,
 		];

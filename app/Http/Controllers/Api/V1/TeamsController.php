@@ -11,7 +11,6 @@ class TeamsController extends Controller
 {
 
     public function index(){
-    	dd(\Auth::user());
 		$teams = \DB::table('team_user')
 					->selectRaw('teams.id, teams.name, teams.slug')
 					->join('teams', 'team_user.team_id', '=', 'teams.id')
@@ -27,9 +26,20 @@ class TeamsController extends Controller
 	}
 
 	public function teamProjects($teamId){
-		$projects = Team::find($teamId)->projects;
+		$team = Team::find($teamId);
+		$projects = $team ? $team->projects : [];
 		return [
 			'projects' => $projects,
+		];
+	}
+
+	public function store(Request $request){
+		$team = Team::create([
+			'name' => $request->name,
+		]);
+
+		return [
+			'team' => $team,
 		];
 	}
 

@@ -9,6 +9,11 @@ class Team extends Model
 {
 	use Sluggable;
     protected $table ='teams';
+    protected $fillable = [
+        'name',
+        'created_at',
+        'updated_at',
+    ];
 
     public function sluggable(){
     	return [
