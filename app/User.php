@@ -29,9 +29,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
     
     public function teams(){
-        return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id');
+        return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
+                    ->withTimestamps();
     }
 
 }

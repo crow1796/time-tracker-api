@@ -15,9 +15,11 @@ class ProjectsController extends Controller
 				'team_id' => $teamId,
 				'title' => $request->title,
 			]);
+
 		return [
 			'status' => $project ? true : false,
 			'project' => $project->toArray(),
+			'iterations' => $project->iterations,
 		];
 	}
 

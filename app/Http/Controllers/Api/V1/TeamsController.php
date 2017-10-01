@@ -16,12 +16,8 @@ class TeamsController extends Controller
 					->join('teams', 'team_user.team_id', '=', 'teams.id')
 					->join('users', 'team_user.user_id', '=', 'users.id')
 					->get();
-		$iterations = Iteration::orderBy('started_at', 'desc')
-								->limit(5)
-								->get();
 		return [
 			'teams' => $teams,
-			'iterations' => $iterations,
 		];
 	}
 
@@ -37,6 +33,8 @@ class TeamsController extends Controller
 		$team = Team::create([
 			'name' => $request->name,
 		]);
+
+		\Auth::user()->teams()->attach($team);
 
 		return [
 			'team' => $team,

@@ -9,6 +9,10 @@ class Team extends Model
 {
 	use Sluggable;
     protected $table ='teams';
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
     protected $fillable = [
         'name',
         'created_at',
@@ -28,6 +32,7 @@ class Team extends Model
     }
     
     public function members(){
-        return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id');
+        return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id')
+                    ->withTimestamps();
     }
 }
