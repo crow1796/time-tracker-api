@@ -29,7 +29,7 @@ class TeamsController extends Controller
 		];
 	}
 
-	public function store(Request $request){
+	public function create(Request $request){
 		$team = Team::create([
 			'name' => $request->name,
 		]);

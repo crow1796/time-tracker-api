@@ -17,8 +17,6 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->integer('iteration_id')
                     ->unsigned();
-            $table->integer('project_id')
-                    ->unsigned();
             $table->string('title')
                     ->nullable();
             $table->text('description')
@@ -31,11 +29,6 @@ class CreateTasksTable extends Migration
             $table->foreign('iteration_id')
                     ->references('id')
                     ->on('iterations')
-                    ->onDelete('cascade');
-
-            $table->foreign('project_id')
-                    ->references('id')
-                    ->on('projects')
                     ->onDelete('cascade');
 
             $table->timestamps();

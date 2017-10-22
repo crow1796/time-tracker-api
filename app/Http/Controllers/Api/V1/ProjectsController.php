@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Team;
 use App\Project;
+use App\Iteration;
 
 class ProjectsController extends Controller
 {
@@ -16,10 +17,17 @@ class ProjectsController extends Controller
 				'title' => $request->title,
 			]);
 
+		$iteration = new Iteration;
+		$iteration->project_id = $project->id;
+		$iteration->started_at = \Carbon\Carbon::now();
+		$iteration->ended_at = \Carbon\Carbon::now()->addDays(7);
+		$iteration->save();
+
 		return [
 			'status' => $project ? true : false,
 			'project' => $project->toArray(),
-			'iterations' => $project->iterations,
+			'iterations' => $project->iterations()->orderBy('started_at')->get()->toArray(),
+			'iteration' => $iteration,
 		];
 	}
 

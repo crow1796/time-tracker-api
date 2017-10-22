@@ -11,12 +11,13 @@ class IterationsController extends Controller
 	public function index($teamId, $projectId){
 		return [
 			'iterations' => Iteration::where('project_id', $projectId)
+                                    ->orderBy('started_at', 'desc')
 									->limit(5)
 									->get(),
 		];
 	}
     
-    public function store($teamId, $projectId, Request $reqeust){
+    public function create($teamId, $projectId, Request $reqeust){
     	$iteration = new Iteration;
     	$iteration->project_id = $projectId;
     	$iteration->started_at = \Carbon\Carbon::now();
@@ -26,8 +27,9 @@ class IterationsController extends Controller
     	return [
     		'iteration' => $iteration,
     		'iterations' => Iteration::where('project_id', $projectId)
-    								->limit(5)
-    								->get(),
+                                    ->orderBy('started_at', 'desc')
+                                    ->limit(5)
+                                    ->get(),
     	];
     }
 }

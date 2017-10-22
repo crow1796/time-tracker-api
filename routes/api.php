@@ -22,11 +22,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function(){
 
 	Route::group(['prefix' => 'teams', 'middleware' => ['jwt.auth']], function(){
 		Route::get('/all', 'TeamsController@index');
-		Route::post('/create', 'TeamsController@store');
+		Route::post('/create', 'TeamsController@create');
 		Route::get('/{teamId}/projects', 'TeamsController@teamProjects');
 		Route::post('/{teamId}/projects/create', 'ProjectsController@create');
 		Route::get('/{teamId}/projects/{projectId}/iterations/all', 'IterationsController@index');
-		Route::post('/{teamId}/projects/{projectId}/iterations/create', 'IterationsController@store');
-		Route::post('/{teamId}/projects/{projectId}/iterations/{iterationId}/tasks/store', 'TasksController@store');
+		Route::post('/{teamId}/projects/{projectId}/iterations/create', 'IterationsController@create');
+		Route::post('/{teamId}/projects/{projectId}/iterations/tasks/all', 'TasksController@index');
+		Route::post('/{teamId}/projects/{projectId}/iterations/{iterationId}/tasks/store', 'TasksController@create');
 	});
 });

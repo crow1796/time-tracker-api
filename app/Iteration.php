@@ -14,7 +14,11 @@ class Iteration extends Model
     	'updated_at',
     ];
 
-    protected function project(){
+    public function project(){
     	return $this->belongsTo('App\Project');
+    }
+
+    public function tasks(){
+        return $this->hasMany('App\Task');
     }
 }
