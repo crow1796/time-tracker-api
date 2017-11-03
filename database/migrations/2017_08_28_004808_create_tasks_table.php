@@ -21,9 +21,7 @@ class CreateTasksTable extends Migration
                     ->nullable();
             $table->text('description')
                     ->nullable();
-            $table->float('status')
-                    ->nullable();
-            $table->float('estimate')
+            $table->string('status')
                     ->nullable();
 
             $table->foreign('iteration_id')

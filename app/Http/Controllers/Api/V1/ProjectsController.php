@@ -19,6 +19,7 @@ class ProjectsController extends Controller
 
 		$iteration = new Iteration;
 		$iteration->project_id = $project->id;
+		$iteration->name = 'Iteration 1';
 		$iteration->started_at = \Carbon\Carbon::now();
 		$iteration->ended_at = \Carbon\Carbon::now()->addDays(7);
 		$iteration->save();
