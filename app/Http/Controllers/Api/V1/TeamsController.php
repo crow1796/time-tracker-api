@@ -11,11 +11,8 @@ class TeamsController extends Controller
 {
 
     public function index(){
-		$teams = \DB::table('team_user')
-					->selectRaw('teams.id, teams.name, teams.slug')
-					->join('teams', 'team_user.team_id', '=', 'teams.id')
-					->join('users', 'team_user.user_id', '=', 'users.id')
-					->get();
+		$user = \Auth::user();
+		$teams = $user->teams;
 		return [
 			'teams' => $teams,
 		];

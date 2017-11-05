@@ -25,7 +25,33 @@ class IterationsController extends Controller
 			return ['error' => $validation->errors()->all()];
 		}
 		
+		dump(\Carbon\Carbon::parse($request->period[0]));
+		dd(\Carbon\Carbon::parse($request->period[1]));
+		
     	$iteration = new Iteration;
+		$iteration->project_id = $projectId;
+		$iteration->name = $request->name;
+    	$iteration->started_at = \Carbon\Carbon::parse($request->period[0]);
+    	$iteration->ended_at = \Carbon\Carbon::parse($request->period[1]);
+    	$iteration->save();
+
+    	return [
+    		'iteration' => $iteration,
+    		'iterations' => Iteration::where('project_id', $projectId)
+                                    ->orderBy('started_at', 'desc')
+                                    ->limit(5)
+                                    ->get(),
+    	];
+	}
+    
+    public function update($teamId, $projectId, Request $request){
+		$validation = $this->validateIteration($request->all());
+
+		if($validation->fails()){
+			return ['error' => $validation->errors()->all()];
+		}
+		
+    	$iteration = Iteration::find($request->id);
 		$iteration->project_id = $projectId;
 		$iteration->name = $request->name;
     	$iteration->started_at = \Carbon\Carbon::parse($request->period[0]);
