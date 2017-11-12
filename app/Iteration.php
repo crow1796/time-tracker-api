@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Iteration extends Model
 {
     protected $table = 'iterations';
+    protected $fillable = [
+        'project_id',
+        'name',
+        'started_at',
+        'ended_at',
+    ];
     protected $dates = [
     	'started_at',
     	'ended_at',

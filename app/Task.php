@@ -13,7 +13,7 @@ class Task extends Model
     	'title',
     	'description',
     	'status',
-    	'estimate',
+        'estimate',
     ];
     protected $dates = [
     	'created_at',

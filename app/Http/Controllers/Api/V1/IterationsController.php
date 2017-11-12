@@ -25,14 +25,11 @@ class IterationsController extends Controller
 			return ['error' => $validation->errors()->all()];
 		}
 		
-		dump(\Carbon\Carbon::parse($request->period[0]));
-		dd(\Carbon\Carbon::parse($request->period[1]));
-		
     	$iteration = new Iteration;
 		$iteration->project_id = $projectId;
 		$iteration->name = $request->name;
-    	$iteration->started_at = \Carbon\Carbon::parse($request->period[0]);
-    	$iteration->ended_at = \Carbon\Carbon::parse($request->period[1]);
+    	$iteration->started_at = $request->period[0];
+    	$iteration->ended_at = $request->period[1];
     	$iteration->save();
 
     	return [
@@ -50,13 +47,12 @@ class IterationsController extends Controller
 		if($validation->fails()){
 			return ['error' => $validation->errors()->all()];
 		}
-		
-    	$iteration = Iteration::find($request->id);
-		$iteration->project_id = $projectId;
-		$iteration->name = $request->name;
-    	$iteration->started_at = \Carbon\Carbon::parse($request->period[0]);
-    	$iteration->ended_at = \Carbon\Carbon::parse($request->period[1]);
-    	$iteration->save();
+		$iteration = Iteration::find($request->id);
+		$iteration->update([
+			'name' => $request->name,
+			'started_at' => \Carbon\Carbon::parse($request->period[0]),
+			'ended_at' => \Carbon\Carbon::parse($request->period[1]),
+		]);
 
     	return [
     		'iteration' => $iteration,

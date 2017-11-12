@@ -16,8 +16,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function(){
 
 	Route::group(['namespace' => 'Auth'], function(){
 		Route::get('/user', 'LoginController@getUser');
-		Route::post('login', 'LoginController@login');
-		Route::post('register', 'RegisterController@register');
+		Route::post('/login', 'LoginController@login');
+		Route::post('/register', 'RegisterController@register');
 	});
 
 	Route::group(['prefix' => 'teams', 'middleware' => ['jwt.auth']], function(){

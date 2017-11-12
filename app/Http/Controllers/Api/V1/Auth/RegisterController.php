@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use TimeTracker\Auth\JWTAuthenticator;
+
 
 class RegisterController extends Controller
 {
@@ -38,6 +40,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->jwtAuth = new JWTAuthenticator();
     }
 
     /**
@@ -50,7 +53,6 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|min:3|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -65,7 +67,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
@@ -81,7 +82,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $validation = $this->validator($request->all());
-        if($validation->fails()) return response()->json(['status' => false, 'errors' => $validation->errors()->all()]);
+        if($validation->fails()) return response()->json(['status' => false, 'error' => $validation->errors()->all()]);
 
         $user = $this->create($request->all());
 
@@ -89,6 +90,7 @@ class RegisterController extends Controller
 
         // $this->guard()->login($user);
 
-        return response()->json(['status' => true, 'message' => 'Registered Successfully!']);
+        return $this->jwtAuth
+                    ->apiLogin($request->only('email', 'password'));
     }
 }
